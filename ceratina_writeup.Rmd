@@ -1,0 +1,51 @@
+---
+title: "Individual dietary specialization in a generalist bee varies across populations but has no effect on the richness of associated microbial communities"
+author: "Marilia P. Gaiarsa, Sandra Rehan, Matthew Barbour, Quinn McFrederick"
+#date: "`r Sys.Date()`"
+date: "March 2022, *The American Naturalist*"
+bibliography: references.bib  
+output:
+  html_document: 
+    self_contained: no
+  pdf_document: default
+  linkcolor: blue
+header-includes: \usepackage{float}
+geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
+---
+
+<style>
+body {
+text-align: justify}
+</style>
+
+
+# Overview 
+We examine the occurrence of individual specialization in a solitary bee species, *Ceratina australensis* in three different wild populations from Australia. We use data previously published by @mcfrederick2019wild on metabarcoding of the pollen contents of *Ceratina* nests to characterize the plant, bacteria, and fungi present in each individual nest. We show that bee individuals have marked dietary specialization and that the level of specialization varies across populations. In the most specialized population, we also show that individuals' diet breadth was positively related to the richness of fungi, but not bacteria. Overall, individual specialization appeared to have a weak or negligible effect on the microbial richness of nests, suggesting that different mechanisms beyond environmental transmission may be at play regarding microbial acquisition in wild bees.
+
+The analyses, raw data, and metadat are deposited in Zenodo and the github repo [ceratinaIndDiet](https://github.com/Magaiarsa/ceratinaIndDiet). Previously published sequence data are publicly available under NCBI/EMBL/DDBJ accession numbers SAMN08911168- SAMN08911424.
+
+
+
+## Data & metadata 
+The excel spreadsheet `rawData.xlsx` contains all raw data used in  the analyses. In all of the tabs, each line represents a genus/ASV and the columns have information related to the metabarcoding (sequence ID, best taxonomic match, etc), as well as the number of reads found in each brood cell of each individual nest. There are four spreadsheets: `plant` (with the genus-level plant data), `plant_asv` (with the ASV plant data---see Online Supplement for details), `bact` (with the ASV bacteria data), and `fungi` (with the ASV fungi data). From the raw data, as described in the methods, we created matrices of nests (individuals) x taxonomic group for plants, plants ASV, bacteria, and fungi. We then used the plant matrix to calculate proportional similarity index for each individual [@schoener1968anolis; @roughgarden1979theory; @zaccarelli2013ri], using the `PSicalc` function in the `RInSp` package [@zaccarelli2013ri]. As a measure of resource overlap among individuals, we calculated `weighted.closeness` that individual in their plant network from the plant matrix, using the `weighted.closeness` function in the `bipartite` package [@bipartite]. 
+
+In the file `metadata.csv` each line represents one individual/nest (`inds`) from each of the three different populations (`pop`). The column `degree` refers to the total number of plant genera present in the nest (richness), `weighted.closeness` is the closeness centrality, `psis` is the proportional similarity index. The next six columns are the rarefied richness of bacteria and fungi associated to the pollen, in three different rarefaction depths (see Methods and Online Supplement for details).  
+
+```{r, echo=FALSE, message=FALSE}
+library(RInSp); library(dplyr); library(ggplot2); library(tidyverse)
+inds.metrics <- read_csv("metadata.csv") %>%
+  # make pop level variable
+  separate(inds, into = c("pop","temp"), sep = 1, remove = F) %>%
+  select(-temp)
+inds.metrics ## checking that the data loaded
+```
+
+## Code
+The script `analyses.R` loads the metadata file above and details the different statistical analyses and recreates the plots from the main text.
+
+## Session Info
+```{r}
+sessionInfo() 
+```
+
+# References
