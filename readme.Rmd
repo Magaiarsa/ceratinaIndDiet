@@ -1,46 +1,8 @@
----
-title: "Individual dietary specialization in a generalist bee varies across populations but has no effect on the richness of associated microbial communities"
-author: "Marilia P. Gaiarsa, Sandra Rehan, Matthew Barbour, Quinn McFrederick"
-#date: "`r Sys.Date()`"
-date: "March 2022, *The American Naturalist*"
-bibliography: references.bib  
-output:
-  pdf_document: default
-  html_document: 
-    self_contained: no
-  linkcolor: blue
-header-includes: \usepackage{float}
-geometry: "left=3cm,right=3cm,top=2cm,bottom=2cm"
----
-
-<style>
-body {
-text-align: justify}
-</style>
+Title: "Individual dietary specialization in a generalist bee varies across populations but has no effect on the richness of associated microbial communities"
+Authors: Marilia P. Gaiarsa, Sandra Rehan, Matthew Barbour, Quinn McFrederick
+Journal: The American Naturalist 
 
 # Overview 
 We examine the occurrence of individual specialization in a solitary bee species, *Ceratina australensis* in three different wild populations from Australia. We use data previously published by @mcfrederick2019wild on metabarcoding of the pollen contents of *Ceratina* nests to characterize the plant, bacteria, and fungi present in each individual nest. We show that bee individuals have marked dietary specialization and that the level of specialization varies across populations. In the most specialized population, we also show that individuals' diet breadth was positively related to the richness of fungi, but not bacteria. Overall, individual specialization appeared to have a weak or negligible effect on the microbial richness of nests, suggesting that different mechanisms beyond environmental transmission may be at play regarding microbial acquisition in wild bees.
 
-The analyses and data are in Zenodo and the github repo [ceratinaIndDiet](https://github.com/Magaiarsa/ceratinaIndDiet), and previously published sequence data are publicly available under NCBI/EMBL/DDBJ accession numbers SAMN08911168- SAMN08911424.
-
-## Session Info
-```{r}
-sessionInfo() 
-```
-
-## Data 
-Each line in the file `data.csv` relates to one individual nest (`inds`) from each of the three different populations (`pop`). The column `degree` refers to the total number of plant genera present in the nest (richness), `weighted.closeness` to the centrality of that individual in their network (as a measure of resource overlap among individuals), `psis` is the individual specialization [@schoener1968anolis; @roughgarden1979theory; @zaccarelli2013ri]. We used the R packages `bipartite` [@bipartite] to calculate centrality and `RInSp` [@zaccarelli2013ri] to calculate specialization. The next six columns refer to the richness of bacteria and fungi associated to the pollen, in three different rarefaction depths (see Methods and Online Supplement for details).  
-
-```{r, echo=FALSE, message=FALSE}
-library(tidyverse)
-inds.metrics <- read_csv("data.csv") %>%
-  # make pop level variable
-  separate(inds, into = c("pop","temp"), sep = 1, remove = F) %>%
-  select(-temp)
-inds.metrics ## checking that the data loaded
-```
-
-## Code
-The script `analysis.R` loads the data file above and details the statistical analysis and recreates the plots from the main text.
-
-# References
+This repo cointains an R Markdown document (pdf and rmd) describing the data and analyses, as well as xlsx file with the raw data, a csv file with the metadata, and RScript with the analyses to statistical results and figures. These files are also available on Zenodo (doi: 10.5281/zenodo.6327241), and previously published sequence data are publicly available under NCBI/EMBL/DDBJ accession numbers SAMN08911168- SAMN08911424.
