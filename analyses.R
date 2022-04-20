@@ -4,7 +4,7 @@ library(tidyverse); library(broom); library(visreg); library(cowplot); library(p
 ################################
 # read data ----
 ################################
-inds.metrics <- read_csv("data.csv") %>%
+inds.metrics <- read_csv("metadata.csv") %>%
   # make pop level variable
   separate(inds, into = c("pop","temp"), sep = 1, remove = F) %>%
   select(-temp)
